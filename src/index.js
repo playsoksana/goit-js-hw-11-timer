@@ -9,10 +9,6 @@ function transferTime(time) {
 function pad(value) {
     return String(value).padStart(2, '0');
 }
-// new CountdownTimer({
-//     selector: '#timer-1',
-//     targetDate: new Date('Jul 17, 2019'),
-// });
 
 // =================================
 const refs = {
@@ -23,19 +19,34 @@ const refs = {
 
 };
 
-const someDate = new Date('May 25, 2021 00:00:00');
-const finishTime = someDate.getTime();
-function timerStart() {
-    const currentTime = Date.now();
-    const durationTime = finishTime - currentTime;
-    const { days, hours, mins, secs } = transferTime(durationTime);
-    insertTime(transferTime(durationTime))
-
-    if (durationTime < 500) {
-        clearInterval(intervalTimer);
-    }
+//================================================================
+class CountdownTimer {
+constructor ({selector, targetDate}) {
+this.selector = selector;
+this.finishTime = targetDate;
+this.intervalTimer = null;
 };
 
+timerStart() {
+    this.intervalTimer = setInterval(()=>{
+        if (durationTime < 100) {
+            clearInterval(this.intervalTimer);
+        }
+        const currentTime = Date.now();
+            const durationTime = this.finishTime - currentTime;
+        insertTime(transferTime(durationTime));
+      
+    }, 1000)    
+};
+
+
+};
+
+const timer = new CountdownTimer({
+    selector: '#timer-1',
+    targetDate: new Date('May 25, 2021 00:00:00'),
+ 
+});
 function insertTime(time) {
     const { days, hours, mins, secs } = time;
     refs.days.innerHTML = days;
@@ -43,4 +54,4 @@ function insertTime(time) {
     refs.mins.innerHTML = mins;
     refs.secs.innerHTML = secs;
 };
-const intervalTimer = setInterval(timerStart, 1000);
+timer.timerStart() 
