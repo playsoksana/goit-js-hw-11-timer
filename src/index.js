@@ -9,49 +9,44 @@ function transferTime(time) {
 function pad(value) {
     return String(value).padStart(2, '0');
 }
-
 // =================================
 const refs = {
     days: document.querySelector('[data-value="days"]'),
     hours: document.querySelector('[data-value="hours"]'),
     mins: document.querySelector('[data-value="mins"]'),
     secs: document.querySelector('[data-value="secs"]'),
-
 };
-
 //================================================================
 class CountdownTimer {
-constructor ({selector, targetDate}) {
-this.selector = selector;
-this.finishTime = targetDate;
-this.intervalTimer = null;
-};
-
-timerStart() {
-    this.intervalTimer = setInterval(()=>{
-        if (durationTime < 100) {
-            clearInterval(this.intervalTimer);
-        }
-        const currentTime = Date.now();
+    constructor({ selector, targetDate }) {
+        this.selector = selector;
+        this.finishTime = targetDate;
+        this.intervalTimer = null;
+    };
+    timerStart() {
+        this.intervalTimer = setInterval(() => {
+            if (durationTime < 100) {
+                clearInterval(this.intervalTimer);
+            }
+            const currentTime = Date.now();
             const durationTime = this.finishTime - currentTime;
-        insertTime(transferTime(durationTime));
-      
-    }, 1000)    
-};
+            this.insertTime(transferTime(durationTime));
 
-
+        }, 1000)
+    };
+    insertTime(time) {
+        const { days, hours, mins, secs } = time;
+        refs.days.innerHTML = days;
+        refs.hours.innerHTML = hours;
+        refs.mins.innerHTML = mins;
+        refs.secs.innerHTML = secs;
+    };
 };
 
 const timer = new CountdownTimer({
     selector: '#timer-1',
     targetDate: new Date('May 25, 2021 00:00:00'),
- 
 });
-function insertTime(time) {
-    const { days, hours, mins, secs } = time;
-    refs.days.innerHTML = days;
-    refs.hours.innerHTML = hours;
-    refs.mins.innerHTML = mins;
-    refs.secs.innerHTML = secs;
-};
-timer.timerStart() 
+
+timer.timerStart();
+
