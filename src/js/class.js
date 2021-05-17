@@ -8,8 +8,8 @@ export default class CountdownTimer {
         this.selector = selector;
         this.finishTime = targetDate;
         this.intervalTimer = null;
-        this.t = setTimeout(this.makeMarkup(this), 0);
-        this.s = setTimeout(this.timerStart(), 0)
+        this.makeMarkup(this);
+        this.timerStart();
     };
 
     timerStart() {
