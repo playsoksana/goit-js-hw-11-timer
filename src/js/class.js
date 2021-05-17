@@ -7,6 +7,7 @@ export default class CountdownTimer {
     constructor({ selector, targetDate }) {
         this.selector = selector;
         this.finishTime = targetDate;
+
         this.intervalTimer = null;
         this.makeMarkup(this);
         this.timerStart();
@@ -14,11 +15,12 @@ export default class CountdownTimer {
 
     timerStart() {
         this.intervalTimer = setInterval(() => {
-            const currentTime = Date.now();
-            const durationTime = this.finishTime - currentTime;
-            if (durationTime < 900) {
+            const currentTime = new Date();
+            if (Date.parse(new Date())>=Date.parse(this.finishTime)) {
                 clearInterval(this.intervalTimer);
+                return;
             }
+            const durationTime = this.finishTime - currentTime;
             this.insertTime(transferTime(durationTime));
         }, 1000)
     };
@@ -43,5 +45,4 @@ export default class CountdownTimer {
         this.refs.mins.innerHTML = mins;
         this.refs.secs.innerHTML = secs;
     };
-
 };
